@@ -1,0 +1,22 @@
+{
+  "name": "react-h5",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-react-admin start",
+    "build": "webpack-react-admin build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "antd": "^4.11.2",
+    "mobx": "^6.0.5",
+    "mobx-react": "^7.0.6",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "webpack-react-admin": "0.0.2"
+  }
+}
