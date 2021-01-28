@@ -7,24 +7,16 @@ class UserController extends Controller {
     const {
       ctx
     } = this;
-    await ctx.service.user.register(ctx.query);
-    ctx.body = {
-      code: 200,
-      msg: 'ok'
-    }
+    const data = await ctx.service.user.register(ctx.query);
+    return data;
   }
   async login() {
     const {
       ctx
     } = this;
-    const data = await ctx.service.user.login(ctx.query);
-    ctx.body = {
-      code: 200,
-      data: {
-        token: data
-      }
-    }
-   }
+    const data = await ctx.service.user.login(ctx.request.body);
+    return data;
+  }
 }
 
 module.exports = UserController;

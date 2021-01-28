@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 
@@ -17,10 +17,10 @@ function MainLayout(props) {
     setIndex(parseInt(parmas.key));
   };
   return (
-    <Layout>
+    <Layout className="layout-box">
       <Header className="header">
         <div className="logo">
-          吕肥肥68
+          闪电出行
         </div>
         <Menu 
           theme="dark" 
@@ -28,9 +28,9 @@ function MainLayout(props) {
           defaultSelectedKeys={['1']}
           onClick={handleClickMenu}
         >
-          <Menu.Item key={1}>nav 1</Menu.Item>
-          <Menu.Item key={2}>nav 2</Menu.Item>
-          <Menu.Item key={3}>nav 3</Menu.Item>
+          <Menu.Item key={1}>书籍中心</Menu.Item>
+          <Menu.Item key={2}>用户中心</Menu.Item>
+          <Menu.Item key={3}>配置中心</Menu.Item>
         </Menu>
       </Header>
       <Layout>
@@ -42,47 +42,32 @@ function MainLayout(props) {
             style={{ height: '100%', borderRight: 0 }}
           >
             {
-              index === 1 &&  <SubMenu key="sub1" icon={<UserOutlined />} title="subnav 1">
-                <Menu.Item key="1">option1</Menu.Item>
-                <Menu.Item key="2">option2</Menu.Item>
-                <Menu.Item key="3">option3</Menu.Item>
-                <Menu.Item key="4">option4</Menu.Item>
+              index === 1 &&  <SubMenu key="sub1" icon={<UserOutlined />} title="书籍管理">
+                <Menu.Item key="1">
+                  <Link to='/'>书籍列表</Link>
+                </Menu.Item>
               </SubMenu>
             }
 
             {
-              index === 2 && <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
-                <Menu.Item key="5">option5</Menu.Item>
-                <Menu.Item key="6">option6</Menu.Item>
-                <Menu.Item key="7">option7</Menu.Item>
-                <Menu.Item key="8">option8</Menu.Item>
+              index === 2 && <SubMenu key="sub2" icon={<LaptopOutlined />} title="用户管理">
+                <Menu.Item key="5">
+                  <Link to='/detail'>用户列表</Link>
+                </Menu.Item>
               </SubMenu>
             }
 
             {
-              index === 3 && <SubMenu key="sub3" icon={<NotificationOutlined />} title="subnav 3">
-                <Menu.Item key="9">option9</Menu.Item>
-                <Menu.Item key="10">option10</Menu.Item>
-                <Menu.Item key="11">option11</Menu.Item>
-                <Menu.Item key="12">option12</Menu.Item>
+              index === 3 && <SubMenu key="sub3" icon={<NotificationOutlined />} title="配置管理">
+                <Menu.Item key="9">配置列表</Menu.Item>
               </SubMenu>
             }
 
           </Menu>
         </Sider>
-        <Layout style={{ padding: '0 24px 24px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
+        <Layout>
           <Content
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
+            className="site-layout-background content"
           >
             <Switch>          
               <Route exact path='/' component={Home} />
@@ -91,6 +76,7 @@ function MainLayout(props) {
           </Content>
         </Layout>
       </Layout>
+      <Footer className="footer">©2021 Created by shandiantech, All Rights Reserved.</Footer>
     </Layout>
   )
 }

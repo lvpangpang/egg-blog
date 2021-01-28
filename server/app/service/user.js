@@ -13,25 +13,33 @@ class UserService extends Service {
       phone
     } = query;
     const data = await app.mysql.query(`insert into ${tableName} (username, password, phone) values('${userName}', '123', '${phone}')`);
-    return data;
+    if(data) {
+      return {
+        code: 200
+      };
+    } else {
+      return '注册失败'
+    }
   }
 
-  async login(query) {
+  async login(body) {
     const {
       app
     } = this;
     const {
       userName,
       pwd
-    } = query;
+    } = body;
     const data = await app.mysql.query(`select * from ${tableName} where username='${userName}' and password='${pwd}'`);
     if(data.length) {
       const token = app.jwt.sign({
         username: data[0]['username']
       }, app.config.jwt.secret);
-      return token;
+      return {
+        token
+      };
     } else {
-      return null;
+      return '用户名或者密码错误';
     }
   }
 }

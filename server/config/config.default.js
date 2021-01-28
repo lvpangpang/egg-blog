@@ -16,9 +16,23 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '123456';
 
   // add your middleware config here
-  config.middleware = ['auth'];
+  config.middleware = ['auth', 'result'];
 
-  config.publicRoutes = ["/user/register", "/user/login"]
+  config.publicRoutes = ["/user/register", "/user/login"];
+
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+  };
+
+  config.security = {
+    // 关闭csrf验证
+    csrf: {
+      enable: false,
+    },
+    // 白名单
+    domainWhiteList: ['*']
+  };
 
   config.jwt = {
     secret: "123456"
