@@ -7,7 +7,7 @@ module.exports = (options, app) => {
       publicRoutes
     } = app.config
     const index = publicRoutes.indexOf(request.path.split('?')[0]);
-    if (index===-1) {
+    if (index!==-1) {
       await next()
     } else {
       // 把Bearer 截取掉，解析的时候不需要加上Bearer

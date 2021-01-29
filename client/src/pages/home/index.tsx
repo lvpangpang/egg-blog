@@ -1,23 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { observer, useLocalStore } from 'mobx-react';
 
-import { Button } from 'antd';
+import { Button, Table } from 'antd';
 
 import store from '@/store';
 import './index.less';
 
+const columns = [
+  {
+    title: '姓名',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: '年龄',
+    dataIndex: 'age',
+    key: 'age',
+  },
+  {
+    title: '住址',
+    dataIndex: 'address',
+    key: 'address',
+  },
+  {
+    title: '操作',
+    key: 'action',
+    render: (text, record) => (
+      <Button type="primary">删除</Button>
+    ),
+  },
+];
+
 function Index(props) {
   const homeStore = useLocalStore(() => store.homeStore);
+  const { list } = homeStore;
+
+  const getData = () => {
+    
+  };
+
   return (
     <div className='home-box'>
-      <div className='text'>{`首页数据: ${homeStore.num}`}</div>
+      {/* 条件搜索 */}
+      <div></div>
+
+      {/* 列表数据 */}
       <div>
-        <Button type='primary' onClick={homeStore.setNum}>点我</Button>
-      </div>
-      <br/>
-      <div>
-        <Link to={'/detail'}>去详情</Link>
+        <Table 
+          dataSource={list.list} 
+          columns={columns}
+          pagination={{
+            current: list.pageNum,
+            total: list.total,
+            showTotal: () => `共 ${list.total} 条`,
+          }}
+          // pageChange={pageChange} 
+        />
       </div>
     </div>
   )

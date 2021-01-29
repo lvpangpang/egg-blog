@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 
 import request from '@/config/request';
 import API from '@/config/api';
@@ -7,23 +7,19 @@ import API from '@/config/api';
 import './index.less';
 
 const layout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 },
+  labelCol: { span: 0 },
+  wrapperCol: { span: 24 },
 };
 
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
+function Login(props) {
 
-function Login() {
-
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     console.log(values)
     const {
       name,
       pwd
     } = values;
-    request({
+    const data = await request({
       method: 'post',
       url: API.login,
       data: {
@@ -31,6 +27,10 @@ function Login() {
         pwd
       }
     });
+    localStorage.setItem('token', data?.token);
+    localStorage.setItem('userInfo', JSON.stringify(data?.userInfo));
+    message.success('登录成功');
+    props.history.replace('/');
   };
 
   return <div className="login-box">
@@ -41,23 +41,21 @@ function Login() {
       onFinish={onFinish}
     >
       <Form.Item
-        label="用户名"
         name="name"
         rules={[{ required: true, message: '请输入用户名' }]}
       >
-        <Input />
+        <Input placeholder='请输入用户名' />
       </Form.Item>
 
       <Form.Item
-        label="密码"
         name="pwd"
         rules={[{ required: true, message: '请输入密码' }]}
       >
-        <Input.Password />
+        <Input.Password placeholder='请输入密码' />
       </Form.Item>
 
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
+      <Form.Item>
+        <Button type="primary" htmlType="submit" className="login-btn">
           登录
         </Button>
       </Form.Item>

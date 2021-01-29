@@ -6,19 +6,18 @@ module.exports = () => {
       if (res) {
         if (typeof res === 'string') {
           ctx.body = {
-            msg: res,
             code: 500,
+            msg: res
           }
         } else {
           const {
-            data,
             ...rest
           } = res
           ctx.body = {
-            msg: 'ok',
             code: 200,
-            data,
-            ...rest
+            data: {
+              ...rest
+            }
           }
         }
       }

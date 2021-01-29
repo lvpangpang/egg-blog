@@ -1,24 +1,33 @@
 import React, { useState } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb, Button } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 
+import RouterConfig from '@/router/routerConfig';
+import { getItem } from '@/untils'; 
 import './index.less';
 
 const { Header, Footer, Sider, Content } = Layout;
 const { SubMenu } = Menu;
-
-const Home = React.lazy(() => import('@/pages/home'));
-const Detail = React.lazy(() => import('@/pages/detail'));
 
 function MainLayout(props) {
   const [index, setIndex] = useState(1);
   const handleClickMenu = (parmas) => {
     setIndex(parseInt(parmas.key));
   };
+
+  const loginOut = () => {
+    localStorage.removeItem('token');
+    window.location.replace('/login');
+  };
+
   return (
     <Layout className="layout-box">
       <Header className="header">
+        <div className="user-box">
+          <span className='nick-name'>{getItem('userInfo')?.userName}</span>
+          <Button type="primary" onClick={loginOut}>退出</Button>
+        </div>
         <div className="logo">
           闪电出行
         </div>
@@ -69,9 +78,12 @@ function MainLayout(props) {
           <Content
             className="site-layout-background content"
           >
-            <Switch>          
-              <Route exact path='/' component={Home} />
-              <Route exact path='/detail' component={Detail} />
+            <Switch> 
+              {
+                RouterConfig.map((item) => {
+                  return <Route exact path={item.path} component={item.component} />;
+                })
+              }         
             </Switch>
           </Content>
         </Layout>

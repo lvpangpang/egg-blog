@@ -27,16 +27,20 @@ class UserService extends Service {
       app
     } = this;
     const {
-      userName,
+      name,
       pwd
     } = body;
-    const data = await app.mysql.query(`select * from ${tableName} where username='${userName}' and password='${pwd}'`);
+    const data = await app.mysql.query(`select * from ${tableName} where username='${name}' and password='${pwd}'`);
     if(data.length) {
+      const res = data[0];
       const token = app.jwt.sign({
-        username: data[0]['username']
+        username: res['username']
       }, app.config.jwt.secret);
       return {
-        token
+        token,
+        userInfo: {
+          userName: res['username']
+        }
       };
     } else {
       return '用户名或者密码错误';
