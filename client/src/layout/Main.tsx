@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, Redirect } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Button } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 
 import RouterConfig from '@/router/routerConfig';
-import { getItem } from '@/untils'; 
+import { setItem, getItem } from '@/untils'; 
 import './index.less';
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -12,8 +12,16 @@ const { SubMenu } = Menu;
 
 function MainLayout(props) {
   const [index, setIndex] = useState(1);
-  const handleClickMenu = (parmas) => {
-    setIndex(parseInt(parmas.key));
+
+  const handleClickMenu = (params) => {
+    const key  = params?.key;
+    setIndex(key);
+    setItem('curMode', key);
+  };
+
+  const handleClickSubMenu = (params) => {
+    const key  = params?.key;
+    setItem('curSub', key);
   };
 
   const loginOut = () => {
@@ -34,7 +42,7 @@ function MainLayout(props) {
         <Menu 
           theme="dark" 
           mode="horizontal" 
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={[getItem('curMode')]}
           onClick={handleClickMenu}
         >
           <Menu.Item key={1}>书籍中心</Menu.Item>
@@ -46,20 +54,27 @@ function MainLayout(props) {
         <Sider width={200} className="site-layout-background">
           <Menu
             mode="inline"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={[getItem('curSub')]}
             defaultOpenKeys={['sub1']}
             style={{ height: '100%', borderRight: 0 }}
+            onClick={handleClickSubMenu}
           >
             {
-              index === 1 &&  <SubMenu key="sub1" icon={<UserOutlined />} title="书籍管理">
+              index == 1 &&  <SubMenu key="sub1" icon={<UserOutlined />} title="书籍管理">
                 <Menu.Item key="1">
-                  <Link to='/'>书籍列表</Link>
+                  <Link to='/home/list'>书籍列表</Link>
+                </Menu.Item>
+                <Menu.Item key="2">
+                  <Link to='/'>AAAA</Link>
+                </Menu.Item>
+                <Menu.Item key="3">
+                  <Link to='/'>BBBBB</Link>
                 </Menu.Item>
               </SubMenu>
             }
 
             {
-              index === 2 && <SubMenu key="sub2" icon={<LaptopOutlined />} title="用户管理">
+              index == 2 && <SubMenu key="sub2" icon={<LaptopOutlined />} title="用户管理">
                 <Menu.Item key="5">
                   <Link to='/detail'>用户列表</Link>
                 </Menu.Item>
@@ -67,7 +82,7 @@ function MainLayout(props) {
             }
 
             {
-              index === 3 && <SubMenu key="sub3" icon={<NotificationOutlined />} title="配置管理">
+              index == 3 && <SubMenu key="sub3" icon={<NotificationOutlined />} title="配置管理">
                 <Menu.Item key="9">配置列表</Menu.Item>
               </SubMenu>
             }
@@ -83,7 +98,11 @@ function MainLayout(props) {
                 RouterConfig.map((item) => {
                   return <Route exact path={item.path} component={item.component} />;
                 })
-              }         
+              }   
+              {/* 重定向 */}
+              {
+                <Redirect to='/'></Redirect>
+              }      
             </Switch>
           </Content>
         </Layout>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 
 import request from '@/config/request';
@@ -13,24 +13,30 @@ const layout = {
 
 function Login(props) {
 
+  const [loading, setLoading] = useState(false);
+
   const onFinish = async (values: any) => {
-    console.log(values)
     const {
       name,
       pwd
     } = values;
-    const data = await request({
-      method: 'post',
-      url: API.login,
-      data: {
-        name,
-        pwd
-      }
-    });
-    localStorage.setItem('token', data?.token);
-    localStorage.setItem('userInfo', JSON.stringify(data?.userInfo));
-    message.success('登录成功');
-    props.history.replace('/');
+    setLoading(true);
+    try {
+      const data = await request({
+        method: 'post',
+        url: API.login,
+        data: {
+          name,
+          pwd
+        }
+      });
+      localStorage.setItem('token', data?.token);
+      localStorage.setItem('userInfo', JSON.stringify(data?.userInfo));
+      message.success('登录成功');
+      props.history.replace('/');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return <div className="login-box">
@@ -55,7 +61,7 @@ function Login(props) {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-btn">
+        <Button type="primary" htmlType="submit" className="login-btn" loading={loading}>
           登录
         </Button>
       </Form.Item>

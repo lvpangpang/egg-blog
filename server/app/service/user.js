@@ -1,4 +1,5 @@
 const Service = require('egg').Service;
+const { genPassword } = require('../untils/md5.js');
 
 const tableName = 'user';
 
@@ -10,9 +11,10 @@ class UserService extends Service {
     } = this;
     const {
       userName,
-      phone
+      phone,
+      pwd
     } = query;
-    const data = await app.mysql.query(`insert into ${tableName} (username, password, phone) values('${userName}', '123', '${phone}')`);
+    const data = await app.mysql.query(`insert into ${tableName} (username, password, phone) values('${userName}', '${genPassword(pwd)}', '${phone}')`);
     if(data) {
       return {
         code: 200
@@ -30,7 +32,8 @@ class UserService extends Service {
       name,
       pwd
     } = body;
-    const data = await app.mysql.query(`select * from ${tableName} where username='${name}' and password='${pwd}'`);
+    console.log(genPassword(pwd));
+    const data = await app.mysql.query(`select * from ${tableName} where username='${name}' and password='${genPassword(pwd)}'`);
     if(data.length) {
       const res = data[0];
       const token = app.jwt.sign({
