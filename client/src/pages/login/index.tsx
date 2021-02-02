@@ -23,6 +23,7 @@ function Login(props) {
     setLoading(true);
     try {
       const data = await request({
+        handleError: true,
         method: 'post',
         url: API.login,
         data: {
@@ -33,7 +34,7 @@ function Login(props) {
       localStorage.setItem('token', data?.token);
       localStorage.setItem('userInfo', JSON.stringify(data?.userInfo));
       message.success('登录成功');
-      props.history.replace('/');
+      window.location.replace('/');
     } finally {
       setLoading(false);
     }
