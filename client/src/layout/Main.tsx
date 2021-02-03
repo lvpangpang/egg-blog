@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Button } from 'antd';
 
 import Top from './Top';
 import Left from './Left';
-import { setItem, getItem } from '@/untils'; 
+import { getItem } from '@/untils'; 
 import './index.less';
 
 const { Header, Footer, Sider, Content } = Layout;
-const { SubMenu } = Menu;
 
 function MainLayout(props) {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(getItem('curTop'));
 
   const loginOut = () => {
-    localStorage.removeItem('token');
+    localStorage.clear();
     window.location.replace('/login');
   };
 
@@ -24,9 +23,7 @@ function MainLayout(props) {
           <span className='nick-name'>{getItem('userInfo')?.userName}</span>
           <Button type="primary" onClick={loginOut}>退出</Button>
         </div>
-        <div className="logo">
-          闪电出行
-        </div>
+        <div className="logo">闪电出行</div>
         <Top handleClick={(id) => {setIndex(id)}}></Top>
       </Header>
       <Layout>

@@ -4,6 +4,7 @@ import { observer, useLocalStore } from 'mobx-react';
 
 import { Button, Table } from 'antd';
 
+import Search from './search';
 import store from '@/store';
 import './index.less';
 
@@ -42,22 +43,21 @@ function Index(props) {
 
   return (
     <div className='home-box'>
+      
       {/* 条件搜索 */}
-      <div></div>
+      <Search></Search>
 
       {/* 列表数据 */}
-      <div>
-        <Table 
-          dataSource={list.list} 
-          columns={columns}
-          pagination={{
-            current: list.pageNum,
-            total: list.total,
-            showTotal: () => `共 ${list.total} 条`,
-          }}
-          // pageChange={pageChange} 
-        />
-      </div>
+      <Table 
+        dataSource={list.list} 
+        columns={columns}
+        pagination={{
+          current: list.pageNum,
+          total: list.total,
+          showTotal: () => `共 ${list.total} 条`,
+        }}
+        // pageChange={pageChange} 
+      />
     </div>
   )
 }

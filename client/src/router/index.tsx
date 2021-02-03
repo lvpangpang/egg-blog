@@ -2,8 +2,7 @@ import React, { Suspense } from 'react';
 import {
   Router,
   Switch,
-  Route,
-  Redirect
+  Route
 } from 'react-router-dom';
 
 import history from './history';

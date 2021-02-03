@@ -11,35 +11,33 @@ const { SubMenu } = Menu;
 const { menus } = UserInfo;
 
 interface Props {
-  top: string,
-  handleClick: (id:string) => void;
+  top: string|number
 }
 
-function Left(props) {
+function Left(props: Props) {
 
-  const { top, handleClick } = props;
+  const { top } = props;
 
   const [data, setData] = useState([]);
-  const [openKey, setOpenKey] = useState([]);
 
   const handleClickSubMenu = useCallback((params) => {
-    const key  = params?.key;
-    setItem('curTop', key);
-    handleClick(key);
+    const { key }  = params;
+    setItem('curLeft', key);
   }, []);
 
   useEffect(() => {
     let list = menus.filter((item) => {
       return top == item['menuId']
     })[0];
-    setData(list?.childMenus);
+    let curList = list?.childMenus;
+    setData(curList);
   }, [top]);
 
   return(
     <Menu
       mode="inline"
-      defaultSelectedKeys={[getItem('curSub')]}
-      defaultOpenKeys={data && data.map((item) => {return item['menuId']})}
+      selectedKeys={[getItem('curLeft')]}
+      openKeys={data&&data.map((item) => { return item['menuId'] + ''})}
       style={{ height: '100%', borderRight: 0 }}
       onClick={handleClickSubMenu}
     >
@@ -49,7 +47,7 @@ function Left(props) {
             <SubMenu key={item['menuId']} icon={<NotificationOutlined />} title={item['menuName']}>
               {
                 item?.childMenus.map((sonItem) => {
-                  return <Menu.Item key={item['menuId']}>
+                  return <Menu.Item key={sonItem['menuId']}>
                     <Link to={sonItem?.url}>{sonItem?.menuName}</Link>
                   </Menu.Item>
                 })

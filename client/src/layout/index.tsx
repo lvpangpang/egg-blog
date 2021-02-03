@@ -16,7 +16,7 @@ function MainLayout() {
             return (<Route exact key={i} path={item.path} component={item.component}/>)
           })
         } 
-        <Redirect to='/'></Redirect>
+        {/* <Redirect to='/'></Redirect> */}
       </Switch>
     </Main>
     : <Redirect to='/login'></Redirect>

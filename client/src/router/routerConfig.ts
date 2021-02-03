@@ -1,9 +1,7 @@
 import React from 'react';
 
-const Welcome = React.lazy(() => import('@/pages/welcome'));
-const Home = React.lazy(() => import('@/pages/home'));
-const HomeDetails = React.lazy(() => import('@/pages/home/details'));
-const Detail = React.lazy(() => import('@/pages/detail'));
+const Welcome = React.lazy(() => import('@/pages/welcome/index'));
+const OrderList = React.lazy(() => import('@/pages/order/index'));
 
 const RouterConfig:Array<any> = [
   {
@@ -12,19 +10,9 @@ const RouterConfig:Array<any> = [
     component: Welcome
   },
   {
-    name: 'home',
-    path: '/home/list',
-    component: Home
-  },
-  {
-    name: 'homeDetails',
-    path: '/homeDetails',
-    component: HomeDetails
-  },
-  {
-    name: 'detail',
-    path: '/detail',
-    component: Detail
+    name: 'order',
+    path: '/order/list',
+    component: OrderList
   }
 ];
 

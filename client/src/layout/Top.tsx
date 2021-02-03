@@ -10,7 +10,7 @@ interface Props {
   handleClick: (id:string) => void;
 }
 
-function Top(props) {
+function Top(props: Props) {
 
   const { handleClick } = props;
 
@@ -24,7 +24,7 @@ function Top(props) {
     <Menu 
       theme="dark" 
       mode="horizontal" 
-      defaultSelectedKeys={[getItem('curTop')]}
+      selectedKeys={[getItem('curTop')]}
       onClick={handleClickMenu}
     >
       {
