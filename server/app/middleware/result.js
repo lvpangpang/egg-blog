@@ -2,7 +2,7 @@ module.exports = () => {
   return async function handlerRes(ctx, next) {
     try {
       const res = await next()
-      console.log(res)
+
       if (res) {
         if (typeof res === 'string') {
           ctx.body = {

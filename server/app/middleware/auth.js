@@ -10,8 +10,7 @@ module.exports = (options, app) => {
     if (index!==-1) {
       await next()
     } else {
-      // 把Bearer 截取掉，解析的时候不需要加上Bearer
-      const token = (ctx.headers.xToken || '').substring(7)
+      const token = (ctx.headers.token || '');
       // 解析token
       try {
         ctx.state.userInfo = await app.jwt.verify(token, app.config.jwt.secret)

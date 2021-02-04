@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Row, Col, Form, Input, Select, Button } from 'antd';
 
 const { Option } = Select;
@@ -7,22 +7,48 @@ const SearchFormItemLayout = {
   wrapperCol: { span: 17 }
 };
 
-function Search() {
+interface Props {
+  handleSearch: (params: any) => void
+}
+
+function Search(props: Props) {
+
+  const { handleSearch } = props;
+
+  const refForm = useRef(null);
 
   const handleSubmit = (value) => {
-    console.log(value);
+    handleSearch(value);
+  };
+
+  const handleReset = () => {
+    refForm.current.resetFields();
+    handleSearch({});
   };
 
   return (
-    <Form onFinish={handleSubmit} style={{ marginBottom: '20px' }}>
+    <Form 
+      ref={refForm}
+      onFinish={handleSubmit} 
+      style={{ marginBottom: '20px' }}
+    >
       <Row>
         <Col span={6}>
           <Form.Item
             {...SearchFormItemLayout}
-            label="订单编号"
-            name="orderNo"
+            label="用户名"
+            name="userName"
           >
             <Input placeholder='请输入用户名' />
+          </Form.Item>
+        </Col>
+        <Col span={6}>
+          <Form.Item
+            {...SearchFormItemLayout}
+            label="手机号"
+            name="phone"
+          >
+            <Input placeholder='请输入手机号' />
           </Form.Item>
         </Col>
         <Col span={6}>
@@ -44,6 +70,7 @@ function Search() {
       <Row>
         <Col span={24} style={{ textAlign: "right" }}>
           <Button className="ml-8" type="primary" htmlType="submit">搜索</Button>
+          <Button className="ml-8" type="primary" onClick={handleReset}>清空</Button>
         </Col>
       </Row>
     </Form>

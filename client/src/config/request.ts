@@ -22,7 +22,7 @@ export default function request(config) {
       data,
       params,
       headers: {
-        xToken: localStorage.getItem('xToken')
+        token: localStorage.getItem('token')
       },
       timeout: 10000
     }).then((data) => {
