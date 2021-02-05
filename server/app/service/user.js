@@ -61,8 +61,9 @@ class UserService extends Service {
       pageSize = 10
     } = query;
 
-    const data = await app.mysql.query(`select * from ${tableName} where (username='${userName}' or '${userName}'='') and (phone='${phone}' or '${phone}'='') order by create_time desc limit ${(current-1) * pageSize}, ${pageSize}`);
-    const total = await app.mysql.query(`select count(*) from ${tableName}`);
+    let data = await app.mysql.query(`select * from ${tableName} where (username like '%${userName}%' or '${userName}'='') and (phone like '%${phone}%' or '${phone}'='') order by create_time desc `);
+    const total = data.length;
+    data = data.splice((current-1) * pageSize, pageSize);
     if (data) {
       data.forEach((item) => {
         item['create_time'] = moment(item['create_time']).format('YYYY-MM-DD HH:mm:ss');
@@ -70,14 +71,33 @@ class UserService extends Service {
       })
       return {
         list: data,
-        current,
+        current: parseInt(current),
         pageSize,
-        total: total[0]['count(*)']
+        total
       }
     } else {
       return '查询失败';
     }
   }
+
+    async del(body) {
+      const {
+        app
+      } = this;
+      console.log(body)
+      const {
+       id
+      } = body;
+      const data = await app.mysql.query(`delete from ${tableName} where id=${id}`);
+      console.log(data)
+      if (data) {
+        return {
+          code: 200
+        };
+      } else {
+        return '删除失败';
+      }
+    }
 }
 
 module.exports = UserService

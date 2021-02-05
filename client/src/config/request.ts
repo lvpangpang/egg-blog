@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import { message } from 'antd';
 
-import history from '@/router/history';
 import DOMAIN from './apiDomain';
 
 axios.defaults.baseURL = DOMAIN();
@@ -32,8 +31,9 @@ export default function request(config) {
       if (code === 200) {
         reslove(result.data);
         // 未登录
-      } else if (code === 999) {
-        history.replace('/login');
+      } else if (code === 401) {
+        localStorage.clear();
+        window.location.replace('/login');
       } else {
         message.error(msg);
         if (handleError) {
