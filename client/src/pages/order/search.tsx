@@ -10,17 +10,22 @@ const SearchFormItemLayout = {
 interface Props {
   initSearch: object,
   handleReset: () => void,
-  handleSearch: (params: any) => void
+  handleSearch: (params: any) => void,
+  handleExport: (params: any) => void
 }
 
 function Search(props: Props) {
 
-  const { initSearch, handleSearch, handleReset } = props;
+  const { initSearch, handleSearch, handleReset, handleExport } = props;
 
   const refForm = useRef(null);
 
   const handleSubmit = (value) => {
     handleSearch(value);
+  };
+
+  const _handleExport = () => {
+    handleExport(refForm.current.getFieldsValue());
   };
 
   const _handleReset = () => {
@@ -61,6 +66,7 @@ function Search(props: Props) {
 
       <Row>
         <Col span={24} style={{ textAlign: "right" }}>
+          <Button className="ml-8" type="primary" onClick={_handleExport}>导出</Button>
           <Button className="ml-8" type="primary" htmlType="submit">搜索</Button>
           <Button className="ml-8" onClick={_handleReset}>清空</Button>
         </Col>

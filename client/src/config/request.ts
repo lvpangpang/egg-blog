@@ -41,7 +41,7 @@ export default function request(config) {
         }
       }
     }).catch((error) => {
-      // console.log(error);
+      console.log(error);
       message.error('服务器异常，请稍后再试')
       if (handleError) {
         reject(error);

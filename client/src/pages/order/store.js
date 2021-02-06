@@ -36,6 +36,17 @@ class OrderStore {
     this.getData();
     message.success('删除成功')
   };
+
+  exportData = async (params = this.search) => {
+    const data = await request({
+      url: '/user/export',
+      params: {
+        ...params
+      }
+    });
+    window.location.href = data?.url;
+    message.success('导出成功')
+  };
   
   search = {}
   setSearch = (data) => {

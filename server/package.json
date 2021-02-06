@@ -12,7 +12,10 @@
     "egg-jwt": "^3.1.7",
     "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.11.0",
-    "moment": "^2.29.1"
+    "egg-static": "^2.2.0",
+    "moment": "^2.29.1",
+    "node-xlsx": "^0.16.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "autod": "^3.0.1",

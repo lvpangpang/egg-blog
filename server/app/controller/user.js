@@ -36,6 +36,14 @@ class UserController extends Controller {
     const data = await ctx.service.user.del(ctx.request.body);
     return data;
   }
+
+  async export() {
+    const {
+      ctx
+    } = this;
+    const data = await ctx.service.user.export(ctx.query);
+    return data;
+  }
 }
 
 module.exports = UserController;

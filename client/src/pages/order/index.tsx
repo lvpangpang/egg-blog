@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { observer, useLocalStore } from 'mobx-react';
 import { Button, Table, Divider } from 'antd';
@@ -46,11 +46,15 @@ const columns = (fn) => {
 
 function Index(props) {
   const orderStore = useLocalStore(() => store.orderStore);
-  const { search, data, loading, getData, setSearch, delData } = orderStore;
+  const { search, data, loading, getData, setSearch, delData, exportData } = orderStore;
 
   const pageChange = (value) => {
     const { current } = value;
     getData(search, current);
+  };
+
+  const handleExport = (value) => {
+    exportData(value);
   };
 
   useEffect(() => {
@@ -65,6 +69,7 @@ function Index(props) {
         initSearch={search}
         handleReset={setSearch}
         handleSearch={getData}
+        handleExport={handleExport}
       ></Search>
 
       {/* 列表数据 */}
