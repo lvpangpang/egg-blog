@@ -34,10 +34,19 @@ function Login(props) {
       localStorage.setItem('token', data?.token);
       localStorage.setItem('userInfo', JSON.stringify(data?.userInfo));
       message.success('登录成功');
+      await getMenu();
       window.location.replace('/');
     } finally {
       setLoading(false);
     }
+  };
+
+  const getMenu = async () => {
+    const data = await request({
+      method: 'get',
+      url: API.getMenu
+    });
+    localStorage.setItem('menu', JSON.stringify(data.menu));
   };
 
   return <div className="login-box">

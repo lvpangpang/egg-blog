@@ -17,9 +17,9 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '123456';
 
   // add your middleware config here
-  config.middleware = ['auth', 'result'];
+  config.middleware = ['result'];
 
-  config.publicRoutes = ["/user/register", "/user/login"];
+  config.publicRoutes = ["/user/register", "/user/login", "menu/list"];
 
   config.cors = {
     origin: '*',

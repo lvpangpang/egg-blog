@@ -2,9 +2,8 @@ import React, { useCallback } from 'react';
 import { Menu } from 'antd';
 
 import { setItem, getItem } from '@/untils'; 
-import UserInfo from './userInfo';
 
-const { menus } = UserInfo;
+const menus  = getItem('menu');
 
 interface Props {
   handleClick: (id:string) => void;
@@ -29,7 +28,7 @@ function Top(props: Props) {
     >
       {
         menus && menus.map((item:any) => {
-          return <Menu.Item key={item.menuId}>{item.menuName}</Menu.Item>
+          return <Menu.Item key={item.id}>{item.name}</Menu.Item>
         })
       }
       

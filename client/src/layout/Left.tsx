@@ -4,11 +4,10 @@ import { Menu } from 'antd';
 import { NotificationOutlined } from '@ant-design/icons';
 
 import { setItem, getItem } from '@/untils'; 
-import UserInfo from './userInfo';
 
 const { SubMenu } = Menu;
 
-const { menus } = UserInfo;
+const menus = getItem('menu');
 
 interface Props {
   top: string|number
@@ -27,7 +26,7 @@ function Left(props: Props) {
 
   useEffect(() => {
     let list = menus.filter((item) => {
-      return top == item['menuId']
+      return top == item['id']
     })[0];
     let curList = list?.childMenus;
     setData(curList);
@@ -37,18 +36,18 @@ function Left(props: Props) {
     <Menu
       mode="inline"
       selectedKeys={[getItem('curLeft')]}
-      openKeys={data&&data.map((item) => { return item['menuId'] + ''})}
+      openKeys={data&&data.map((item) => { return item['id'] + ''})}
       style={{ height: '100%', borderRight: 0 }}
       onClick={handleClickSubMenu}
     >
       {
         data && data.map((item) => {
           return (
-            <SubMenu key={item['menuId']} icon={<NotificationOutlined />} title={item['menuName']}>
+            <SubMenu key={item['id']} icon={<NotificationOutlined />} title={item['name']}>
               {
                 item?.childMenus.map((sonItem) => {
-                  return <Menu.Item key={sonItem['menuId']}>
-                    <Link to={sonItem?.url}>{sonItem?.menuName}</Link>
+                  return <Menu.Item key={sonItem['id']}>
+                    <Link to={sonItem?.url}>{sonItem?.name}</Link>
                   </Menu.Item>
                 })
               }
