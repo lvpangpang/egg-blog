@@ -45,11 +45,11 @@ function Search(props: Props) {
         <Col span={6}>
           <Form.Item
             {...SearchFormItemLayout}
-            label="用户名"
+            label="姓名"
             name="userName"
             initialValue={initSearch.userName}
           >
-            <Input placeholder='请输入用户名' />
+            <Input placeholder='请输入姓名' />
           </Form.Item>
         </Col>
         <Col span={6}>

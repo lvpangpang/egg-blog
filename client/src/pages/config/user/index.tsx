@@ -37,7 +37,7 @@ const columns = (fn) => {
         <>
           <Button type="primary" onClick={() => {del(record.id)}}>删除</Button>
           <Divider type="vertical" />
-          <Link to="/order/details">详情</Link>
+          <Link to="/user/details">详情</Link>
         </>
       ),
     },
